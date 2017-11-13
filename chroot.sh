@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+## decommenter dans /etc/default/grub #cryptodisk
+
 RET=$1
 
 GREEN='\e[1;32m'        # Green
