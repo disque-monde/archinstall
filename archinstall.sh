@@ -154,7 +154,7 @@ while getopts "bg" opt; do
         hop
         fchroot
         ;;
-    \?  echo "Options:"
+    \?) echo "Options:"
         echo "   -b: Bios installation"
         echo "   -g: UEFI installation"
         exit 1
