@@ -5,5 +5,7 @@
 
 A script to install Arch Linux with LVM and LUKS
 
+wget https://raw.githubusercontent.com/disque-monde/archinstall/master/archinstall.sh
+
 Usage: ./archinstall -b : Bios installation
        ./archinstall -G : UEFI installation

@@ -13,19 +13,33 @@ export LC_COLLATE=C
 export LANG=fr_FR.UTF-8
 LANG=fr_FR.UTF-8
 
-echo ""
-echo -e $CYAN":: Installation d'ArchLinux"$END
-echo ""
-sleep 3
-touch $LOG
-
-ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
-echo -e $GREEN":: Configuration des locales"$END
-echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen
-locale-gen
-echo LANG=fr_FR.UTF-8 > /etc/locale.conf
-export LANG=fr_FR.UTF-8
-echo KEYMAP=fr >> /etc/vconsole.conf
+prepare(){
+  echo ""
+  echo -e $CYAN":: Installation d'ArchLinux"$END
+  echo ""
+  sleep 3
+  touch $LOG
+  echo -e $GREEN":: Vérification des fichiers..."$END
+  if [ -e choot.sh ] && [ -e post.sh ]; then
+    ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
+    echo -e $GREEN":: Configuration des locales"$END
+    echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen
+    locale-gen
+    echo LANG=fr_FR.UTF-8 > /etc/locale.conf
+    export LANG=fr_FR.UTF-8
+    echo KEYMAP=fr >> /etc/vconsole.conf
+  else
+    wget https://raw.githubusercontent.com/disque-monde/archinstall/master/chroot.sh
+    wget https://github.com/disque-monde/archinstall/blob/master/post.sh
+    ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
+    echo -e $GREEN":: Configuration des locales"$END
+    echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen
+    locale-gen
+    echo LANG=fr_FR.UTF-8 > /etc/locale.conf
+    export LANG=fr_FR.UTF-8
+    echo KEYMAP=fr >> /etc/vconsole.conf
+  fi
+}
 
 parts_gpt(){
     echo -e $GREEN":: Création de la table de partition"$END
@@ -144,12 +158,14 @@ fchroot(){
 
 while getopts "bg" opt; do
   case $opt in
-    b)  parts_msdos
+    b)  prepare
+        parts_msdos
         enc
         hop
         fchroot
         ;;
-    g)  parts_gpt
+    g)  prepare
+        parts_gpt
         enc
         hop
         fchroot
