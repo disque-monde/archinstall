@@ -30,7 +30,7 @@ prepare(){
     echo KEYMAP=fr >> /etc/vconsole.conf
   else
     wget https://raw.githubusercontent.com/disque-monde/archinstall/master/chroot.sh
-    wget https://github.com/disque-monde/archinstall/blob/master/post.sh
+    wget https://raw.githubusercontent.com/disque-monde/archinstall/master/post.sh
     ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
     echo -e $GREEN":: Configuration des locales"$END
     echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen
@@ -152,8 +152,16 @@ fchroot(){
     echo -e $GREEN":: Chroot..."$END
     echo -e $GREEN":: Copie du script chroot"$END
     cp -v chroot.sh /mnt/
+    cp -v post.sh /mnt/
     chmod +x /mnt/chroot.sh
     arch-chroot /mnt ./chroot.sh $RET
+    read -p 'Voulez vous installer des programmes supplèmenaire ? (Y/N)' REP
+    if [ $REP = "Y" ]; then
+      chmod +x /mnt/post.sh
+      arch-chroot /mnt ./post.sh
+    else
+      reboot
+    fi
 }
 
 while getopts "bg" opt; do

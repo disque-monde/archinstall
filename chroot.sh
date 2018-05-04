@@ -52,10 +52,3 @@ echo -e $GREEN"Ajout d'un utilisateur"
 read -p 'Utilisateur: ' USER1
 useradd -g users -m $USER1
 passwd $USER1
-
-read -p 'Voulez vous installer des programmes supplèmenaire ? (Y/N)' REP
-if [ $REP = "Y" ]; then
-  ./post.sh
-else
-  reboot
-fi

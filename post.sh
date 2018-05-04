@@ -32,9 +32,11 @@ post(){
       esac
     fi
   echo ":: Installation des utilitaires usuels"
-  pacman -S firefox firefox-i18n-fr libreoffice-still vlc zsh \
+  pacman -S firefox firefox-i18n-fr libreoffice-still-fr vlc zsh \
             ruby perl transmission-gtk virtualbox zip unzip unrar \
-            atom filezilla sudo git
+            atom filezilla sudo git network-manager-applet networkmanager networkmanager-openvpn\
+            openvpn vim
+
 }
 
 post
